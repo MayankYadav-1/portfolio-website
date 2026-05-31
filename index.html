@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mayank Yadav | Frontend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #060910;
+    --bg2: #0d1117;
+    --bg3: #111827;
+    --accent: #38bdf8;
+    --accent2: #7dd3fc;
+    --accentd: #0ea5e9;
+    --text: #e8f4fd;
+    --muted: #7a9bb5;
+    --border: rgba(56,189,248,0.15);
+    --card: rgba(255,255,255,0.03);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(6,9,16,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+  .hero-dots {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(56,189,248,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black, transparent);
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(56,189,248,0.08);
+    color: var(--accent2);
+    border: 1px solid rgba(56,189,248,0.25);
+    border-radius: 999px;
+    padding: 0.35rem 1.1rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .badge::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-role {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
+  .hero-desc {
+    max-width: 500px;
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.7s ease 0.3s both;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.7s ease 0.4s both;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #060910;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  /* SECTION COMMON */
+  section { padding: 5rem 2rem; max-width: 1000px; margin: 0 auto; }
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+  }
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+  .about-avatar {
+    width: 200px; height: 200px;
+    border-radius: 20px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    position: relative;
+  }
+  .about-avatar::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(56,189,248,0.3), transparent 60%);
+    pointer-events: none;
+  }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 0.98rem; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .about-stats {
+    display: flex; gap: 2rem; margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  }
+  .skill-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    background: rgba(56,189,248,0.05);
+  }
+  .skill-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .skill-name { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+  .skill-level {
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-top: 0.3rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .project-card:hover {
+    border-color: rgba(56,189,248,0.35);
+    transform: translateY(-5px);
+    background: rgba(56,189,248,0.03);
+  }
+  .project-card:hover::before { opacity: 1; }
+  .project-num {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+  .project-desc { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.25rem; flex: 1; line-height: 1.6; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .tag {
+    background: rgba(56,189,248,0.08);
+    color: var(--accent2);
+    border: 1px solid rgba(56,189,248,0.18);
+    border-radius: 6px;
+    padding: 0.18rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .project-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .project-link:hover { gap: 0.7rem; }
+
+  /* CONTACT */
+  .contact-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-box::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(56,189,248,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .contact-box .section-title { margin-bottom: 0.75rem; }
+  .contact-box > p { color: var(--muted); margin-bottom: 2rem; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-chip {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 1.4rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .contact-chip:hover {
+    border-color: var(--accent);
+    background: rgba(56,189,248,0.05);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.83rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .about-grid { grid-template-columns: 1fr; text-align: center; }
+    .about-avatar { margin: 0 auto; }
+    .about-stats { justify-content: center; }
+    .contact-box { padding: 2rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="logo">MY.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-dots"></div>
+  <div class="badge">Open to Internships</div>
+  <h1 class="hero-name">Mayank <span>Yadav</span></h1>
+  <p class="hero-role">Frontend Developer · Gurugram, India</p>
+  <p class="hero-desc">I craft responsive, user-friendly web experiences with clean code and a sharp eye for design. Currently building projects and leveling up every day.</p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">View My Work</a>
+    <a href="#contact" class="btn-outline">Get in Touch</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-tag">About me</p>
+  <div class="about-grid">
+    <div>
+      <div class="about-avatar">MY</div>
+    </div>
+    <div class="about-text">
+      <h2 class="section-title">Building the web, one line at a time</h2>
+      <p>Hey! I'm <strong>Mayank Yadav</strong>, a 20-year-old aspiring frontend developer from <strong>Gurugram, Haryana</strong>. I'm passionate about turning ideas into beautiful, functional websites that people actually enjoy using.</p>
+      <p>I work with <strong>HTML, CSS and JavaScript</strong> to build responsive, mobile-first web pages. I pay close attention to UI design, performance, and clean code — skills I'm sharpening every single day through hands-on projects.</p>
+      <p>I'm actively looking for a <strong>frontend internship</strong> where I can contribute, learn from experienced developers, and grow into a professional web developer.</p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Core Technologies</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Dedication</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-tag">What I know</p>
+  <h2 class="section-title">Skills & Tools</h2>
+  <p class="section-sub">Technologies I use to build fast, responsive, and visually polished web experiences.</p>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML5</div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">CSS3</div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-level">Learning</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📱</div>
+      <div class="skill-name">Responsive Design</div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">SEO Basics</div>
+      <div class="skill-level">Familiar</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐙</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-level">Learning</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🖌️</div>
+      <div class="skill-name">UI Design</div>
+      <div class="skill-level">Familiar</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🚀</div>
+      <div class="skill-name">Performance</div>
+      <div class="skill-level">Learning</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-tag">My work</p>
+  <h2 class="section-title">Projects</h2>
+  <p class="section-sub">Projects I've built from scratch to practice real-world frontend skills.</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-num">01 — Interactive App</div>
+      <h3 class="project-title">Quiz App</h3>
+      <p class="project-desc">A fully interactive quiz app with multiple choice questions, score tracking, a timer per question, and a results screen. Shows real JavaScript logic, DOM manipulation, and dynamic UI updates — exactly what frontend roles test for.</p>
+      <div class="project-tags">
+        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">DOM</span>
+      </div>
+      <a href="#" class="project-link">View Live →</a>
+    </div>
+    <div class="project-card">
+      <div class="project-num">02 — Landing Page</div>
+      <h3 class="project-title">Product Landing Page</h3>
+      <p class="project-desc">A modern brand landing page for a fictional product. Demonstrates brand consistency, visual hierarchy, responsive layout, and mobile-first design thinking.</p>
+      <div class="project-tags">
+        <span class="tag">HTML</span><span class="tag">CSS</span>
+      </div>
+      <a href="#" class="project-link">View Live →</a>
+    </div>
+    <div class="project-card">
+      <div class="project-num">03 — App</div>
+      <h3 class="project-title">To-Do List App</h3>
+      <p class="project-desc">An interactive task manager — add, complete, and delete tasks. Uses localStorage so your tasks stay saved even after refreshing the browser.</p>
+      <div class="project-tags">
+        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+      </div>
+      <a href="#" class="project-link">View Live →</a>
+    </div>
+    <div class="project-card">
+      <div class="project-num">04 — API Project</div>
+      <h3 class="project-title">Weather App</h3>
+      <p class="project-desc">Search any city and get real-time weather data using the OpenWeatherMap API. Shows temperature, conditions, and humidity in a clean card-based UI.</p>
+      <div class="project-tags">
+        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Fetch API</span>
+      </div>
+      <a href="#" class="project-link">View Live →</a>
+    </div>
+    <div class="project-card">
+      <div class="project-num">05 — Clone</div>
+      <h3 class="project-title">Netflix UI Clone</h3>
+      <p class="project-desc">A pixel-accurate clone of Netflix's homepage. Built to demonstrate the ability to replicate professional-grade layouts and maintain brand design consistency.</p>
+      <div class="project-tags">
+        <span class="tag">HTML</span><span class="tag">CSS</span>
+      </div>
+      <a href="#" class="project-link">View Live →</a>
+    </div>
+    <div class="project-card" style="border: 1px dashed rgba(56,189,248,0.2); display:flex; align-items:center; justify-content:center; min-height: 200px;">
+      <div style="text-align:center; color: var(--muted);">
+        <div style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--accent); opacity:0.5;">+</div>
+        <div style="font-size: 0.88rem;">More coming soon...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-box">
+    <p class="section-tag" style="margin-bottom: 0.5rem;">Let's connect</p>
+    <h2 class="section-title">Get In Touch</h2>
+    <p>I'm actively looking for frontend internship opportunities. Whether you have a role, a project idea, or just want to say hello — I'd love to hear from you!</p>
+    <div class="contact-links">
+      <a href="/cdn-cgi/l/email-protection#9df0fce4fcf3f3f6e4fcf9fceba8ddfaf0fcf4f1b3fef2f0" class="contact-chip">✉ <span class="__cf_email__" data-cfemail="e489859d858a8a8f9d85808592d1a48389858d88ca878b89">[email&#160;protected]</span></a>
+      <a href="https://github.com/mayankyadav" class="contact-chip" target="_blank">🐙 GitHub <span style="font-size:0.75rem; color:var(--muted);">(add later)</span></a>
+      <a href="https://linkedin.com/in/mayannkyadav5" class="contact-chip" target="_blank">💼 LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built by <span style="color: var(--accent); font-weight: 500;">Mayank Yadav</span> · Gurugram, India · 2025</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.skill-card, .project-card').fo
